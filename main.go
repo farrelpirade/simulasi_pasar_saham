@@ -540,8 +540,9 @@ func transaksi_saham() {
 		fmt.Scan(&beli_jumlah_saham)
 
 		// menampilkan saldo pengguna sekarang dengan mengambil dari variabel jumSaldo
+		var total_harga_sementara float64 = float64(beli_jumlah_saham) * daftarSaham[hasil].harga
 		fmt.Printf("Saldo anda sekarang adalah %d \n", jumSaldo)
-		if beli_jumlah_saham > jumSaldo {
+		if total_harga_sementara > float64(jumSaldo) {
 			fmt.Println("Saldo anda tidak cukup")
 			transaksi_saham()
 		} else if beli_jumlah_saham < 0 {
@@ -551,8 +552,10 @@ func transaksi_saham() {
 			fmt.Println("Jumlah saham yang ingin dibeli melebihi volume saham")
 			transaksi_saham()
 		} else {
-			jumSaldo -= beli_jumlah_saham
 			var total_harga float64 = float64(beli_jumlah_saham) * daftarSaham[hasil].harga
+			jumSaldo -= int(total_harga)
+			daftarSaham[hasil].volume -= beli_jumlah_saham
+
 			fmt.Printf("Total harga yang harus dibayar adalah Rp%.2f \n", total_harga)
 			fmt.Printf("Saldo anda sekarang adalah %d \n", jumSaldo)
 
@@ -580,7 +583,44 @@ func transaksi_saham() {
 
 	case 2:
 		// menu jual saham
-		
+		fmt.Print("Masukkan kode saham > ")
+		var jual_kode_saham string
+		fmt.Scan(&jual_kode_saham)
+		var hasil int = sequential_search(daftarSaham, jual_kode_saham)
+		if hasil == -1 {
+			fmt.Println("Kode saham tidak ditemukan")
+			transaksi_saham()
+		} else {
+			fmt.Println("Berikut merupakan hasil pencarian : ")
+			fmt.Println("_______________________________________________________________________________________________________________________")
+			fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
+			fmt.Println("_______________________________________________________________________________________________________________________")
+			// Tampilan ke user
+			fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", daftarSaham[hasil].kode, daftarSaham[hasil].nama, daftarSaham[hasil].harga/1000, daftarSaham[hasil].perubahan_persentase, daftarSaham[hasil].volume)
+			fmt.Println()
+			fmt.Println("_______________________________________________________________________________________________________________________")
+		}
+
+		fmt.Print("Masukkan jumlah saham yang ingin dijual > ")
+		var jual_jumlah_saham int
+		fmt.Scan(&jual_jumlah_saham)
+		// menampilkan saldo pengguna sekarang dengan mengambil dari variabel jumSaldo
+		fmt.Printf("Saldo anda sekarang adalah %d \n", jumSaldo)
+		if jual_jumlah_saham < 0 {
+			fmt.Println("Jumlah saham tidak valid")
+			transaksi_saham()
+		} else if jual_jumlah_saham > daftarSaham[hasil].volume {
+			fmt.Println("Jumlah saham yang ingin dijual melebihi volume saham")
+			transaksi_saham()
+		} else {
+			var jual_pendapatan float64 = float64(jual_jumlah_saham) * daftarSaham[hasil].harga
+			jumSaldo += int(jual_pendapatan)
+			daftarSaham[hasil].volume += jual_jumlah_saham
+			fmt.Printf("Volume saham %s sekarang adalah %d \n", daftarSaham[hasil].kode, daftarSaham[hasil].volume)
+			var total_pendapatan float64 = float64(jual_jumlah_saham) * daftarSaham[hasil].harga
+			fmt.Printf("Anda mendapat Rp%.2f \n", total_pendapatan)
+			fmt.Printf("Saldo anda sekarang adalah %d \n", jumSaldo)
+		}
 	case 3:
 		// kembali ke main menu
 		return
