@@ -89,7 +89,8 @@ func main() {
 
 	for {
 		var pilihan int
-		fmt.Print(asciiArt + "\n")
+		fmt.Print(asciiArt )
+		fmt.Println()
 		fmt.Println("Pilih menu")
 		fmt.Println("1. Saldo anda")
 		fmt.Println("2. Daftar saham")
@@ -625,6 +626,14 @@ func transaksi_saham() {
 		// kembali ke main menu
 		return
 	}
+}
+
+func portofolio() {
+
+}
+
+func histori_transaksi() {
+	
 }
 
 func bantuan(pilih_bantuan int) {
