@@ -18,42 +18,42 @@ type saham struct {
 }
 
 var daftarSaham = []saham{
-	{kode: "ASII", nama: "ASTRA INTERNATIONAL"},
-	{kode: "BBRI", nama: "BANK RAKYAT INDONESIA"},
-	{kode: "BMRI", nama: "BANK MANDIRI (PERSERO) TBK"},
-	{kode: "TLKM", nama: "TELKOM INDONESIA (PERSERO) TBK"},
-	{kode: "UNTR", nama: "UNITED TRACTORS"},
-	{kode: "BBCA", nama: "BANK CENTRAL ASIA"},
-	{kode: "AMRT", nama: "SUMBER ALFARIA TRIJAYA TBK"},
-	{kode: "INDF", nama: "PT INDOFOOD SUKSES MAKMUR TBK"},
-	{kode: "GGRM", nama: "GUDANG GARAM TBK"},
-	{kode: "BBNI", nama: "PT BANK NEGARA INDONESIA (PERSERO)"},
-	{kode: "AADI", nama: "ADARO ANDALAN INDONESIA TBK"},
-	{kode: "SMAR", nama: "SINAR MAS AGRO RESOURCES TECHNOLOGY"},
-	{kode: "ICBP", nama: "INDOFOOD CBP SUKSES MAKMUR TBK PT"},
-	{kode: "ANTM", nama: "ANEKA TAMBANG"},
-	{kode: "CPIN", nama: "CHAROEN POKPHAND INDONESIA"},
-	{kode: "ERAA", nama: "ERAJAYA TBK"},
-	{kode: "PGAS", nama: "PERUSAHAAN GAS NEGARA TBK"},
-	{kode: "ISAT", nama: "INDOSAT (PT INDOSAT TBK)"},
-	{kode: "JPFA", nama: "JAPFA COMFEED INDONESIA"},
-	{kode: "BYAN", nama: "BAYAN RESOURCES TBK"},
-	{kode: "GIAA", nama: "GARUDA INDONESIA (PERSERO) TBK"},
-	{kode: "INKP", nama: "INDAH KIAT PULP & PAPER"},
-	{kode: "HMSP", nama: "HANJAYA MANDALA SAMPOERNA"},
-	{kode: "DSSA", nama: "DIAN SWASTATIKA SENTOSA TBK"},
-	{kode: "GEMS", nama: "GOLDEN ENERGY MINES TBK"},
-	{kode: "PTBA", nama: "BUKIT ASAM TBK"},
-	{kode: "AMMN", nama: "AMMAN MINERAL INTERNASIONAL TBK"},
-	{kode: "INDY", nama: "INDIKA ENERGY TBK"},
-	{kode: "AKRA", nama: "AKR CORPORINDO TBK"},
-	{kode: "MEDC", nama: "MEDCO ENERGI INTERNATIONAL"},
-	{kode: "MAPI", nama: "MITRA ADIPERKASA TBK"},
-	{kode: "BRPT", nama: "BARITO PACIFIC TBK"},
-	{kode: "ITMG", nama: "INDO TAMBANGRAYA MEGAH TBK"},
-	{kode: "SMGR", nama: "SEMEN INDONESIA (PERSERO) TBK"},
-	{kode: "MYOR", nama: "MAYORA INDAH"},
-	{kode: "MDKA", nama: "MERDEKA COPPER GOLD TBK PT"},
+    {kode: "ASII", nama: "ASTRA_INTERNATIONAL"},
+    {kode: "BBRI", nama: "BANK_RAKYAT_INDONESIA"},
+    {kode: "BMRI", nama: "BANK_MANDIRI_(PERSERO)_TBK"},
+    {kode: "TLKM", nama: "TELKOM_INDONESIA_(PERSERO)_TBK"},
+    {kode: "UNTR", nama: "UNITED_TRACTORS"},
+    {kode: "BBCA", nama: "BANK_CENTRAL_ASIA"},
+    {kode: "AMRT", nama: "SUMBER_ALFARIA_TRIJAYA_TBK"},
+    {kode: "INDF", nama: "PT_INDOFOOD_SUKSES_MAKMUR_TBK"},
+    {kode: "GGRM", nama: "GUDANG_GARAM_TBK"},
+    {kode: "BBNI", nama: "PT_BANK_NEGARA_INDONESIA_(PERSERO)"},
+    {kode: "AADI", nama: "ADARO_ANDALAN_INDONESIA_TBK"},
+    {kode: "SMAR", nama: "SINAR_MAS_AGRO_RESOURCES_TECHNOLOGY"},
+    {kode: "ICBP", nama: "INDOFOOD_CBP_SUKSES_MAKMUR_TBK_PT"},
+    {kode: "ANTM", nama: "ANEKA_TAMBANG"},
+    {kode: "CPIN", nama: "CHAROEN_POKPHAND_INDONESIA"},
+    {kode: "ERAA", nama: "ERAJAYA_TBK"},
+    {kode: "PGAS", nama: "PERUSAHAAN_GAS_NEGARA_TBK"},
+    {kode: "ISAT", nama: "INDOSAT_(PT_INDOSAT_TBK)"},
+    {kode: "JPFA", nama: "JAPFA_COMFEED_INDONESIA"},
+    {kode: "BYAN", nama: "BAYAN_RESOURCES_TBK"},
+    {kode: "GIAA", nama: "GARUDA_INDONESIA_(PERSERO)_TBK"},
+    {kode: "INKP", nama: "INDAH_KIAT_PULP_&_PAPER"},
+    {kode: "HMSP", nama: "HANJAYA_MANDALA_SAMPOERNA"},
+    {kode: "DSSA", nama: "DIAN_SWASTATIKA_SENTOSA_TBK"},
+    {kode: "GEMS", nama: "GOLDEN_ENERGY_MINES_TBK"},
+    {kode: "PTBA", nama: "BUKIT_ASAM_TBK"},
+    {kode: "AMMN", nama: "AMMAN_MINERAL_INTERNASIONAL_TBK"},
+    {kode: "INDY", nama: "INDIKA_ENERGY_TBK"},
+    {kode: "AKRA", nama: "AKR_CORPORINDO_TBK"},
+    {kode: "MEDC", nama: "MEDCO_ENERGI_INTERNATIONAL"},
+    {kode: "MAPI", nama: "MITRA_ADIPERKASA_TBK"},
+    {kode: "BRPT", nama: "BARITO_PACIFIC_TBK"},
+    {kode: "ITMG", nama: "INDO_TAMBANGRAYA_MEGAH_TBK"},
+    {kode: "SMGR", nama: "SEMEN_INDONESIA_(PERSERO)_TBK"},
+    {kode: "MYOR", nama: "MAYORA_INDAH"},
+    {kode: "MDKA", nama: "MERDEKA_COPPER_GOLD_TBK_PT"},
 }
 
 const asciiArt = `
@@ -79,6 +79,9 @@ const asciiArt = `
 ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝               
 `
 
+// variabel global
+var jumSaldo int
+
 func main() {
 	// program main merupakan interface awal aplikasi saat dibuka
 	rand.Seed(time.Now().UnixNano())
@@ -101,14 +104,13 @@ func main() {
 		switch pilihan {
 		case 1:
 			// menu saldo
-			var pilih_saldo int
-			var jumSaldo int = 0
-			saldo(pilih_saldo, &jumSaldo)
+			saldo()
 		case 2:
 			// menu daftar saham
 			daftar_saham()
 		case 3:
 			// menu transaksi saham
+			transaksi_saham()
 		case 4:
 			// menu portofolio
 		case 5:
@@ -150,10 +152,10 @@ func randomisasi() {
 	}
 }
 
-func saldo(pilihan int, jumSaldo *int) {
+func saldo() {
 	// prosedur saldo untuk menampilkan saldo, top up, dan withdraw
-
-	fmt.Printf("Saldo anda adalah %d \n", *jumSaldo)
+	var pilihan int
+	fmt.Printf("Saldo anda adalah %d \n", jumSaldo)
 	fmt.Println("1. Top up")
 	fmt.Println("2. Withdraw")
 	fmt.Println("3. Kembali")
@@ -168,24 +170,23 @@ func saldo(pilihan int, jumSaldo *int) {
 		fmt.Scan(&topup)
 		if topup < 0 {
 			fmt.Println("Jumlah top up tidak valid")
-			saldo(pilihan, jumSaldo)
+			saldo()
 		}
-		*jumSaldo += topup
-		fmt.Printf("Saldo anda sekarang adalah %d \n", *jumSaldo)
-		saldo(pilihan, jumSaldo)
+		jumSaldo += topup
+		fmt.Printf("Saldo anda sekarang adalah %d \n", jumSaldo)
+		saldo()
 	case 2:
 		// melakukan withdraw
 		var withdraw int
 		fmt.Print("Masukkan jumlah withdraw > ")
 		fmt.Scan(&withdraw)
-		if withdraw > *jumSaldo {
+		if withdraw > jumSaldo {
 			fmt.Println("Saldo anda tidak cukup")
-			saldo(pilihan, jumSaldo)
+			saldo()
 		}
-		*jumSaldo -= withdraw
-		fmt.Printf("Saldo anda sekarang adalah %d \n", *jumSaldo)
-		saldo(pilihan, jumSaldo)
-
+		jumSaldo -= withdraw
+		fmt.Printf("Saldo anda sekarang adalah %d \n", jumSaldo)
+		saldo()
 	case 3:
 		// kembali ke main menu
 		return
@@ -310,18 +311,8 @@ func daftar_saham() {
 				var nama_saham_raw string
 				fmt.Scan(&nama_saham_raw)
 
-				// Mengubah karakter '_' menjadi spasi biasa karena dalam array saham tidak ada karakter '_' dan menggunakan spasi biasa sebagai pemisah
-				var r = []rune(nama_saham_raw)
-				var iterasi_underscore int
-				for iterasi_underscore = 0; iterasi_underscore < len(r); iterasi_underscore++ {
-					if r[iterasi_underscore] == '_' {
-						r[iterasi_underscore] = ' '
-					}
-				}
-				var nama_saham_update string = string(r)
-
 				// Memanggil fungsi binary search untuk mencari nama perusahaan
-				var hasil int = binary_search(daftarSaham, nama_saham_update)
+				var hasil int = binary_search(daftarSaham, nama_saham_raw)
 				if hasil == -1 {
 					fmt.Println("Nama perusahaan tidak ditemukan")
 				} else {
@@ -526,8 +517,70 @@ func transaksi_saham() {
 	switch pilih_transaksi {
 	case 1:
 		// menu beli saham
+		fmt.Print("Masukkan kode saham > ")
+		var beli_kode_saham string
+		fmt.Scan(&beli_kode_saham)
+		var hasil int = sequential_search(daftarSaham, beli_kode_saham)
+		if hasil == -1 {
+			fmt.Println("Kode saham tidak ditemukan")
+			transaksi_saham()
+		} else {
+			fmt.Println("Berikut merupakan hasil pencarian : ")
+			fmt.Println("_______________________________________________________________________________________________________________________")
+			fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
+			fmt.Println("_______________________________________________________________________________________________________________________")
+			// Tampilan ke user
+			fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", daftarSaham[hasil].kode, daftarSaham[hasil].nama, daftarSaham[hasil].harga/1000, daftarSaham[hasil].perubahan_persentase, daftarSaham[hasil].volume)
+			fmt.Println()
+			fmt.Println("_______________________________________________________________________________________________________________________")
+		}
+
+		fmt.Print("Masukkan jumlah saham yang ingin dibeli > ")
+		var beli_jumlah_saham int
+		fmt.Scan(&beli_jumlah_saham)
+
+		// menampilkan saldo pengguna sekarang dengan mengambil dari variabel jumSaldo
+		fmt.Printf("Saldo anda sekarang adalah %d \n", jumSaldo)
+		if beli_jumlah_saham > jumSaldo {
+			fmt.Println("Saldo anda tidak cukup")
+			transaksi_saham()
+		} else if beli_jumlah_saham < 0 {
+			fmt.Println("Jumlah saham tidak valid")
+			transaksi_saham()
+		} else if beli_jumlah_saham > daftarSaham[hasil].volume {
+			fmt.Println("Jumlah saham yang ingin dibeli melebihi volume saham")
+			transaksi_saham()
+		} else {
+			jumSaldo -= beli_jumlah_saham
+			var total_harga float64 = float64(beli_jumlah_saham) * daftarSaham[hasil].harga
+			fmt.Printf("Total harga yang harus dibayar adalah Rp%.2f \n", total_harga)
+			fmt.Printf("Saldo anda sekarang adalah %d \n", jumSaldo)
+
+			// melanjutkan pembayaran
+			fmt.Print("Bayar ? (y/n) > ")
+			var pilih_bayar string
+			fmt.Scan(&pilih_bayar)
+			if pilih_bayar == "y" || pilih_bayar == "Y" {
+				fmt.Println("Pembayaran berhasil")
+				daftarSaham[hasil].volume -= beli_jumlah_saham
+				fmt.Printf("Sisa volume saham %s adalah %d \n", daftarSaham[hasil].kode, daftarSaham[hasil].volume)
+				fmt.Printf("Sisa saldo anda adalah %d \n", jumSaldo)
+				fmt.Println("Ketik apa saja untuk kembali > ")
+				var kembali int
+				fmt.Scan(&kembali)
+				return
+			} else if pilih_bayar == "n" || pilih_bayar == "N" {
+				fmt.Println("Pembayaran dibatalkan")
+				transaksi_saham()
+			} else {
+				fmt.Println("Pilihan tidak valid")
+				transaksi_saham()
+			}
+		}
+
 	case 2:
 		// menu jual saham
+		
 	case 3:
 		// kembali ke main menu
 		return
