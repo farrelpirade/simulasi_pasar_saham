@@ -8,8 +8,8 @@ import (
 
 // aplikasi simulasi pasar saham virtual
 
-const nSaham int = 10000000000
-const nHistori int = 10000000000
+const nSaham int = 36
+const nHistori int = 100
 
 type saham struct {
 	kode                 string
@@ -20,12 +20,12 @@ type saham struct {
 }
 
 type arrTransaksi struct {
-	kode_saham_transaksi          string
-	nama_saham_transaksi          string
-	jumlah_saham_transaksi        int
-	harga_lembar_saham_transaksi  float64
-	harga_total_transaksi         float64
-	jenis_transaksi               string // beli atau jual saham
+	kode_saham_transaksi         string
+	nama_saham_transaksi         string
+	jumlah_saham_transaksi       int
+	harga_lembar_saham_transaksi float64
+	harga_total_transaksi        float64
+	jenis_transaksi              string // beli atau jual saham
 }
 
 var histori [nHistori]arrTransaksi
@@ -33,6 +33,7 @@ var hitungHistori int
 
 // penggunaan alias untuk array yang di fixed-size
 type daftarSaham [nSaham]saham
+
 // inisialisasi kode saham dan nama perusahaan
 var listSaham daftarSaham
 
@@ -135,7 +136,7 @@ func main() {
 			portofolio()
 		case 5:
 			// menu histori transaksi
-			histori_transaksi()
+			histori_transaksi(&histori, hitungHistori)
 		case 6:
 			// menu bantuan
 			var pilih_bantuan int
@@ -381,7 +382,7 @@ func daftar_saham(A *daftarSaham) {
 							}
 						}
 						temp = A[iterasi1]
-						A[iterasi2] = A[max]
+						A[iterasi1] = A[max]
 						A[max] = temp
 					}
 					// menampilkan hasil pengurutan
@@ -568,8 +569,6 @@ func transaksi_saham(A *daftarSaham, saldo *int) {
 			transaksi_saham(A, saldo)
 		} else {
 			var total_harga float64 = float64(beli_jumlah_saham) * A[hasil].harga
-			*saldo -= int(total_harga)
-			A[hasil].volume -= beli_jumlah_saham
 
 			fmt.Printf("Total harga yang harus dibayar adalah Rp%.2f \n", total_harga)
 			fmt.Printf("Saldo anda sekarang adalah %d \n", *saldo)
@@ -579,8 +578,21 @@ func transaksi_saham(A *daftarSaham, saldo *int) {
 			var pilih_bayar string
 			fmt.Scan(&pilih_bayar)
 			if pilih_bayar == "y" || pilih_bayar == "Y" {
-				fmt.Println("Pembayaran berhasil")
+				*saldo -= int(total_harga)
 				A[hasil].volume -= beli_jumlah_saham
+
+				// menambahkan ke history transaksi
+				if hitungHistori < nHistori {
+					histori[hitungHistori].kode_saham_transaksi = A[hasil].kode
+					histori[hitungHistori].nama_saham_transaksi = A[hasil].nama
+					histori[hitungHistori].jumlah_saham_transaksi = beli_jumlah_saham
+					histori[hitungHistori].harga_lembar_saham_transaksi = A[hasil].harga
+					histori[hitungHistori].harga_total_transaksi = total_harga
+					histori[hitungHistori].jenis_transaksi = "Beli"
+					hitungHistori++
+				}
+
+				fmt.Println("Pembayaran berhasil")
 				fmt.Printf("Sisa volume saham %s adalah %d \n", A[hasil].kode, A[hasil].volume)
 				fmt.Printf("Sisa saldo anda adalah %d \n", *saldo)
 				fmt.Println("Ketik apa saja untuk kembali > ")
@@ -635,6 +647,17 @@ func transaksi_saham(A *daftarSaham, saldo *int) {
 			var total_pendapatan float64 = float64(jual_jumlah_saham) * A[hasil].harga
 			fmt.Printf("Anda mendapat Rp%.2f \n", total_pendapatan)
 			fmt.Printf("Saldo anda sekarang adalah %d \n", *saldo)
+
+			// menambahkan ke history transaksi
+			if hitungHistori < nHistori {
+				histori[hitungHistori].kode_saham_transaksi = A[hasil].kode
+				histori[hitungHistori].nama_saham_transaksi = A[hasil].nama
+				histori[hitungHistori].jumlah_saham_transaksi = jual_jumlah_saham
+				histori[hitungHistori].harga_lembar_saham_transaksi = A[hasil].harga
+				histori[hitungHistori].harga_total_transaksi = total_pendapatan
+				histori[hitungHistori].jenis_transaksi = "Jual"
+				hitungHistori++
+			}
 		}
 	case 3:
 		// kembali ke main menu
@@ -656,17 +679,17 @@ func portofolio() {
 func histori_transaksi(h *[nHistori]arrTransaksi, hitungHistori int) {
 	// menu histori transaksi
 	fmt.Println("Berikut merupakan histori transaksi anda : ")
-	fmt.Println("Jenis\t Kode\t Nama\t Jumlah\t Harga/Unit\t Total")
+	fmt.Printf("| %-6s | %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Jenis", "Kode", "Nama Perusahaan", "Jumlah", "Harga/Unit", "Total")
 
 	var i int
 	for i = 0; i < hitungHistori; i++ {
-		fmt.Printf("%s\t %s\t %s\t %d\t %.2f\t %.2f\n", 
-		h[i].jenis_transaksi, 
-		h[i].kode_saham_transaksi, 
-		h[i].nama_saham_transaksi, 
-		h[i].jumlah_saham_transaksi, 
-		h[i].harga_lembar_saham_transaksi/1000, 
-		h[i].harga_total_transaksi/1000)
+		fmt.Printf("%s\t %s\t %s\t %d\t %.2f\t %.2f\n",
+			h[i].jenis_transaksi,
+			h[i].kode_saham_transaksi,
+			h[i].nama_saham_transaksi,
+			h[i].jumlah_saham_transaksi,
+			h[i].harga_lembar_saham_transaksi/1000,
+			h[i].harga_total_transaksi/1000)
 	}
 	fmt.Println()
 	fmt.Println("Ketik apa saja untuk kembali > ")
