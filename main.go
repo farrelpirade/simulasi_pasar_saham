@@ -315,7 +315,7 @@ func daftar_saham(A *daftarSaham) {
 					fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[hasil].kode, A[hasil].nama, A[hasil].harga/1000, A[hasil].perubahan_persentase, A[hasil].volume)
 					fmt.Println()
 					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Print("Ketik apa saja untuk kembali > ")
+					fmt.Print("Ketik X untuk kembali > ")
 					var kembali int
 					fmt.Scan(&kembali)
 					return
@@ -340,7 +340,7 @@ func daftar_saham(A *daftarSaham) {
 					fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[hasil].kode, A[hasil].nama, A[hasil].harga/1000, A[hasil].perubahan_persentase, A[hasil].volume)
 					fmt.Println()
 					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Print("Ketik apa saja untuk kembali > ")
+					fmt.Print("Ketik X untuk kembali > ")
 					var kembali int
 					fmt.Scan(&kembali)
 					return
@@ -396,7 +396,7 @@ func daftar_saham(A *daftarSaham) {
 						fmt.Println()
 					}
 					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Print("Ketik apa saja untuk kembali > ")
+					fmt.Print("Ketik X untuk kembali > ")
 					var kembali int
 					fmt.Scan(&kembali)
 					return
@@ -428,7 +428,7 @@ func daftar_saham(A *daftarSaham) {
 						fmt.Println()
 					}
 					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Print("Ketik apa saja untuk kembali > ")
+					fmt.Print("Ketik X untuk kembali > ")
 					var kembali int
 					fmt.Scan(&kembali)
 					return
@@ -471,7 +471,7 @@ func daftar_saham(A *daftarSaham) {
 						fmt.Println()
 					}
 					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Print("Ketik apa saja untuk kembali > ")
+					fmt.Print("Ketik X untuk kembali > ")
 					var kembali int
 					fmt.Scan(&kembali)
 					return
@@ -501,7 +501,7 @@ func daftar_saham(A *daftarSaham) {
 						fmt.Println()
 					}
 					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Print("Ketik apa saja untuk kembali > ")
+					fmt.Print("Ketik X untuk kembali > ")
 					var kembali int
 					fmt.Scan(&kembali)
 					return
@@ -595,7 +595,7 @@ func transaksi_saham(A *daftarSaham, saldo *int) {
 				fmt.Println("Pembayaran berhasil")
 				fmt.Printf("Sisa volume saham %s adalah %d \n", A[hasil].kode, A[hasil].volume)
 				fmt.Printf("Sisa saldo anda adalah %d \n", *saldo)
-				fmt.Println("Ketik apa saja untuk kembali > ")
+				fmt.Print("Ketik X untuk kembali > ")
 				var kembali int
 				fmt.Scan(&kembali)
 				return
@@ -692,7 +692,7 @@ func histori_transaksi(h *[nHistori]arrTransaksi, hitungHistori int) {
 			h[i].harga_total_transaksi/1000)
 	}
 	fmt.Println()
-	fmt.Println("Ketik apa saja untuk kembali > ")
+	fmt.Print("Ketik X untuk kembali > ")
 	var kembali int
 	fmt.Scan(&kembali)
 	return
