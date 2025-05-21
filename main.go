@@ -31,7 +31,11 @@ type arrTransaksi struct {
 var histori [nHistori]arrTransaksi
 var hitungHistori int
 
-// penggunaan alias untuk array yang di fixed-size
+// penggunaan alias untuk array jumlah saham yang dimiliki yang di fixed-size
+type jumlah_owned_saham [nSaham]int
+var ownedSaham jumlah_owned_saham
+
+// penggunaan alias untuk array saham yang di fixed-size
 type daftarSaham [nSaham]saham
 
 // inisialisasi kode saham dan nama perusahaan
@@ -316,7 +320,7 @@ func daftar_saham(A *daftarSaham) {
 					fmt.Println()
 					fmt.Println("_______________________________________________________________________________________________________________________")
 					fmt.Print("Ketik X untuk kembali > ")
-					var kembali int
+					var kembali string
 					fmt.Scan(&kembali)
 					return
 				}
@@ -341,7 +345,7 @@ func daftar_saham(A *daftarSaham) {
 					fmt.Println()
 					fmt.Println("_______________________________________________________________________________________________________________________")
 					fmt.Print("Ketik X untuk kembali > ")
-					var kembali int
+					var kembali string
 					fmt.Scan(&kembali)
 					return
 				}
@@ -397,7 +401,7 @@ func daftar_saham(A *daftarSaham) {
 					}
 					fmt.Println("_______________________________________________________________________________________________________________________")
 					fmt.Print("Ketik X untuk kembali > ")
-					var kembali int
+					var kembali string
 					fmt.Scan(&kembali)
 					return
 
@@ -429,7 +433,7 @@ func daftar_saham(A *daftarSaham) {
 					}
 					fmt.Println("_______________________________________________________________________________________________________________________")
 					fmt.Print("Ketik X untuk kembali > ")
-					var kembali int
+					var kembali string
 					fmt.Scan(&kembali)
 					return
 
@@ -472,7 +476,7 @@ func daftar_saham(A *daftarSaham) {
 					}
 					fmt.Println("_______________________________________________________________________________________________________________________")
 					fmt.Print("Ketik X untuk kembali > ")
-					var kembali int
+					var kembali string
 					fmt.Scan(&kembali)
 					return
 
@@ -502,7 +506,7 @@ func daftar_saham(A *daftarSaham) {
 					}
 					fmt.Println("_______________________________________________________________________________________________________________________")
 					fmt.Print("Ketik X untuk kembali > ")
-					var kembali int
+					var kembali string
 					fmt.Scan(&kembali)
 					return
 
@@ -578,6 +582,10 @@ func transaksi_saham(A *daftarSaham, saldo *int) {
 			var pilih_bayar string
 			fmt.Scan(&pilih_bayar)
 			if pilih_bayar == "y" || pilih_bayar == "Y" {
+				// menambahkan ke portofolio
+				ownedSaham[hasil] += beli_jumlah_saham
+
+				// melakukan pembayaran
 				*saldo -= int(total_harga)
 				A[hasil].volume -= beli_jumlah_saham
 
@@ -596,7 +604,7 @@ func transaksi_saham(A *daftarSaham, saldo *int) {
 				fmt.Printf("Sisa volume saham %s adalah %d \n", A[hasil].kode, A[hasil].volume)
 				fmt.Printf("Sisa saldo anda adalah %d \n", *saldo)
 				fmt.Print("Ketik X untuk kembali > ")
-				var kembali int
+				var kembali string
 				fmt.Scan(&kembali)
 				return
 			} else if pilih_bayar == "n" || pilih_bayar == "N" {
@@ -636,10 +644,14 @@ func transaksi_saham(A *daftarSaham, saldo *int) {
 		if jual_jumlah_saham < 0 {
 			fmt.Println("Jumlah saham tidak valid")
 			transaksi_saham(A, saldo)
-		} else if jual_jumlah_saham > A[hasil].volume {
+		} else if jual_jumlah_saham > ownedSaham[hasil] {
 			fmt.Println("Jumlah saham yang ingin dijual melebihi volume saham")
 			transaksi_saham(A, saldo)
 		} else {
+			// portofolio
+			ownedSaham[hasil] -= jual_jumlah_saham
+
+			// mendapatkan pendapatan dari penjualan saham
 			var jual_pendapatan float64 = float64(jual_jumlah_saham) * A[hasil].harga
 			*saldo += int(jual_pendapatan)
 			A[hasil].volume += jual_jumlah_saham
@@ -669,11 +681,23 @@ func portofolio() {
 	// menu portofolio
 	fmt.Println("Berikut merupakan portofolio anda : ")
 	fmt.Println("_______________________________________________________________________________________________________________________")
-	fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
+	fmt.Printf("| %-6s | %-8s | %-10s | %-6s | %-10s |\n", "Kode", "Lembar", "Harga/Unit", "Perubahan %", "Total")
 	fmt.Println("_______________________________________________________________________________________________________________________")
 
 	// Tampilan ke user
-
+	var i int 
+	for i = 0; i < nSaham; i++ {
+		var banyak_kepunyaan int
+		banyak_kepunyaan = ownedSaham[i]
+		if banyak_kepunyaan > 0 {
+			var total_kepunyaan float64 = float64(banyak_kepunyaan) * listSaham[i].harga
+			fmt.Printf("| %-6s | %-8d | Rp%-10.3f | %-6.2f | Rp%-10.3f |\n", listSaham[i].kode, banyak_kepunyaan, listSaham[i].harga/1000, listSaham[i].perubahan_persentase, total_kepunyaan/1000)
+		}
+	}
+	fmt.Print("\n Ketik X untuk kembali > ")
+	var kembali string
+	fmt.Scan(&kembali)
+	return
 }
 
 func histori_transaksi(h *[nHistori]arrTransaksi, hitungHistori int) {
@@ -693,7 +717,7 @@ func histori_transaksi(h *[nHistori]arrTransaksi, hitungHistori int) {
 	}
 	fmt.Println()
 	fmt.Print("Ketik X untuk kembali > ")
-	var kembali int
+	var kembali string
 	fmt.Scan(&kembali)
 	return
 
