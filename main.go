@@ -33,6 +33,7 @@ var hitungHistori int
 
 // penggunaan alias untuk array jumlah saham yang dimiliki yang di fixed-size
 type jumlah_owned_saham [nSaham]int
+
 var ownedSaham jumlah_owned_saham
 
 // penggunaan alias untuk array saham yang di fixed-size
@@ -111,7 +112,9 @@ func main() {
 	initKodeNama()
 	var jumSaldo int
 	var pilihan int
-	for {
+
+	// selama pilihan tidak 7 (keluar), program akan terus berjalan
+	for pilihan != 7 {
 		fmt.Print(asciiArt)
 		fmt.Println()
 		fmt.Println("Pilih menu")
@@ -147,12 +150,10 @@ func main() {
 			bantuan(pilih_bantuan)
 		}
 
-		if pilihan == 7 {
-			// keluar dari aplikasi
-			fmt.Println("Terima kasih telah menggunakan aplikasi ini")
-			return
-		}
+		fmt.Println()
 	}
+	fmt.Println("Terima kasih telah menggunakan aplikasi. Sampai jumpa lagi!")
+	fmt.Println()
 }
 
 func randomisasi(A *daftarSaham) {
@@ -187,29 +188,37 @@ func saldo(s *int) {
 		switch pilihan {
 		case 1:
 			// melakukan top up
-			var topup int
-			fmt.Print("Masukkan jumlah top up > ")
-			fmt.Scan(&topup)
-			if topup > 0 {
-				*s += topup
-				fmt.Printf("Top up berhasil. Saldo anda sekarang adalah %d \n", *s)
-			} else {
-				fmt.Println("Nilai tidak valid")
-			}
+			handlerTopup(s)
 		case 2:
 			// melakukan withdraw
-			var withdraw int
-			fmt.Print("Masukkan jumlah withdraw > ")
-			fmt.Scan(&withdraw)
-			if withdraw > 0 && withdraw <= *s {
-				*s -= withdraw
-				fmt.Printf("Withdraw berhasil. Saldo anda sekarang adalah %d \n", *s)
-			} else {
-				fmt.Println("Saldo tidak cukup atau nilai tidak valid")
-			}
+			handlerWithdraw(s)
 		case 3:
 			return
 		}
+	}
+}
+
+func handlerTopup(s *int) {
+	fmt.Print("Masukkan jumlah top up > ")
+	var topup int
+	fmt.Scan(&topup)
+	if topup > 0 {
+		*s += topup
+		fmt.Printf("Top up berhasil. Saldo anda sekarang adalah %d \n", *s)
+	} else {
+		fmt.Println("Nilai tidak valid")
+	}
+}
+
+func handlerWithdraw(s *int) {
+	var withdraw int
+	fmt.Print("Masukkan jumlah withdraw > ")
+	fmt.Scan(&withdraw)
+	if withdraw > 0 && withdraw <= *s {
+		*s -= withdraw
+		fmt.Printf("Withdraw berhasil. Saldo anda sekarang adalah %d \n", *s)
+	} else {
+		fmt.Println("Saldo tidak cukup atau nilai tidak valid")
 	}
 }
 
@@ -685,7 +694,7 @@ func portofolio() {
 	fmt.Println("_______________________________________________________________________________________________________________________")
 
 	// Tampilan ke user
-	var i int 
+	var i int
 	for i = 0; i < nSaham; i++ {
 		var banyak_kepunyaan int
 		banyak_kepunyaan = ownedSaham[i]
