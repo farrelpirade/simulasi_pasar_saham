@@ -115,17 +115,7 @@ func main() {
 
 	// selama pilihan tidak 7 (keluar), program akan terus berjalan
 	for pilihan != 7 {
-		fmt.Print(asciiArt)
-		fmt.Println()
-		fmt.Println("Pilih menu")
-		fmt.Println("1. Saldo anda")
-		fmt.Println("2. Daftar saham")
-		fmt.Println("3. Transaksi saham")
-		fmt.Println("4. Portofolio")
-		fmt.Println("5. Histori transaksi")
-		fmt.Println("6. Bantuan")
-		fmt.Println("7. Keluar")
-		fmt.Print("Masukkan pilihan menu > ")
+		displayMainMenu()
 		fmt.Scan(&pilihan)
 
 		switch pilihan {
@@ -154,6 +144,21 @@ func main() {
 	}
 	fmt.Println("Terima kasih telah menggunakan aplikasi. Sampai jumpa lagi!")
 	fmt.Println()
+}
+
+func displayMainMenu() {
+	// prosedur untuk menampilkan menu utama
+	fmt.Print(asciiArt)
+	fmt.Println()
+	fmt.Println("Pilih menu")
+	fmt.Println("1. Saldo anda")
+	fmt.Println("2. Daftar saham")
+	fmt.Println("3. Transaksi saham")
+	fmt.Println("4. Portofolio")
+	fmt.Println("5. Histori transaksi")
+	fmt.Println("6. Bantuan")
+	fmt.Println("7. Keluar")
+	fmt.Print("Masukkan pilihan menu > ")
 }
 
 func randomisasi(A *daftarSaham) {
@@ -277,261 +282,228 @@ func daftar_saham(A *daftarSaham) {
 
 	// beberapa daftar saham yang bisa diakses
 	for {
-		var i int
-		fmt.Println("Daftar saham : ")
-		fmt.Println("_______________________________________________________________________________________________________________________")
-		fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
-		fmt.Println("_______________________________________________________________________________________________________________________")
-
-		for i = 0; i < nSaham; i++ {
-			// Tampilan ke user
-			fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[i].kode, A[i].nama, A[i].harga/1000, A[i].perubahan_persentase, A[i].volume)
-			fmt.Println()
-		}
-		fmt.Println("_______________________________________________________________________________________________________________________")
-		fmt.Println()
-		fmt.Println("Pilih menu")
-		fmt.Println("1. Cari saham")
-		fmt.Println("2. Urutkan saham")
-		fmt.Println("3. Kembali")
-		fmt.Print("Masukkan pilihan menu > ")
-
-		var pilih_daftar_menu_saham int
-		fmt.Scan(&pilih_daftar_menu_saham)
-
-		switch pilih_daftar_menu_saham {
+		displayDaftarSaham(A)
+		var pilih int = pilihMenuDaftarSaham()
+		switch pilih {
 		case 1:
 			// menu searching saham
-			var pilih_search int
-			fmt.Println("Pilih metode pencarian")
-			fmt.Println("1. Pencarian dengan kode saham")
-			fmt.Println("2. Pencarian dengan nama saham")
-			fmt.Println("3. Kembali")
-			fmt.Print("Masukkan pilihan menu > ")
-			fmt.Scan(&pilih_search)
-
-			switch pilih_search {
-			case 1:
-				// pencarian dengan kode saham dengan sequential search
-				fmt.Print("Masukkan kode saham > ")
-				var kode_saham string
-				fmt.Scan(&kode_saham)
-				var hasil int = sequential_search(*A, kode_saham)
-				if hasil == -1 {
-					fmt.Println("Kode saham tidak ditemukan")
-				} else {
-					fmt.Println("Berikut merupakan hasil pencarian : ")
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					// Tampilan ke user
-					fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[hasil].kode, A[hasil].nama, A[hasil].harga/1000, A[hasil].perubahan_persentase, A[hasil].volume)
-					fmt.Println()
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Print("Ketik X untuk kembali > ")
-					var kembali string
-					fmt.Scan(&kembali)
-					return
-				}
-			case 2:
-				// pencarian dengan nama perusahaan saham dengan binary search
-				fmt.Println("Gunakan underscore (_) untuk spasi")
-				fmt.Print("Masukkan nama perusahaan > ")
-				var nama_saham_raw string
-				fmt.Scan(&nama_saham_raw)
-
-				// Memanggil fungsi binary search untuk mencari nama perusahaan
-				var hasil int = binary_search(*A, nama_saham_raw)
-				if hasil == -1 {
-					fmt.Println("Nama perusahaan tidak ditemukan")
-				} else {
-					fmt.Println("Berikut merupakan hasil pencarian : ")
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					// Tampilan ke user
-					fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[hasil].kode, A[hasil].nama, A[hasil].harga/1000, A[hasil].perubahan_persentase, A[hasil].volume)
-					fmt.Println()
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Print("Ketik X untuk kembali > ")
-					var kembali string
-					fmt.Scan(&kembali)
-					return
-				}
-			case 3:
-				// kembali ke menu daftar saham
-				daftar_saham(A)
-			}
+			menuCariSaham(A)
 		case 2:
 			// menu sorting saham
-			var pilih_sort int
-			fmt.Println("Pilih metode pengurutan")
-			fmt.Println("1. Pengurutan dengan harga saham")
-			fmt.Println("2. Pengurutan dengan volume saham")
-			fmt.Println("3. Kembali")
-			fmt.Print("Masukkan pilihan menu > ")
-			fmt.Scan(&pilih_sort)
-
-			switch pilih_sort {
-			case 1:
-				// pengurutan dengan harga saham dengan selection sort
-				fmt.Println("Mau diurutkan dari harga tertinggi atau terendah?")
-				fmt.Println("1. Tertinggi")
-				fmt.Println("2. Terendah")
-				fmt.Print("Masukkan pilihan menu > ")
-				var pilih_harga int
-				fmt.Scan(&pilih_harga)
-
-				if pilih_harga == 1 {
-					// pengurutan dari harga tertinggi
-					var temp saham
-					var n int = nSaham
-					var iterasi1, iterasi2, max int
-					for iterasi1 = 0; iterasi1 < n-1; iterasi1++ {
-						max = iterasi1
-						for iterasi2 = iterasi1 + 1; iterasi2 < n; iterasi2++ {
-							if A[iterasi2].harga > A[max].harga {
-								max = iterasi2
-							}
-						}
-						temp = A[iterasi1]
-						A[iterasi1] = A[max]
-						A[max] = temp
-					}
-					// menampilkan hasil pengurutan
-					fmt.Println("Berikut merupakan hasil pengurutan : ")
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					for i = 0; i < nSaham; i++ {
-						// Tampilan ke user
-						fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[i].kode, A[i].nama, A[i].harga/1000, A[i].perubahan_persentase, A[i].volume)
-						fmt.Println()
-					}
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Print("Ketik X untuk kembali > ")
-					var kembali string
-					fmt.Scan(&kembali)
-					return
-
-				} else if pilih_harga == 2 {
-					// pengurutan dari harga terendah
-					var temp saham
-					var n int = nSaham
-					var iterasi3, iterasi4, min int
-					for iterasi3 = 0; iterasi3 < n-1; iterasi3++ {
-						min = iterasi3
-						for iterasi4 = iterasi3 + 1; iterasi4 < n; iterasi4++ {
-							if A[iterasi4].harga < A[min].harga {
-								min = iterasi4
-							}
-						}
-						temp = A[iterasi3]
-						A[iterasi3] = A[min]
-						A[min] = temp
-					}
-					// menampilkan hasil pengurutan
-					fmt.Println("Berikut merupakan hasil pengurutan : ")
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					for i = 0; i < nSaham; i++ {
-						// Tampilan ke user
-						fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[i].kode, A[i].nama, A[i].harga/1000, A[i].perubahan_persentase, A[i].volume)
-						fmt.Println()
-					}
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Print("Ketik X untuk kembali > ")
-					var kembali string
-					fmt.Scan(&kembali)
-					return
-
-				} else {
-					fmt.Println("Pilihan tidak valid, silahkan coba lagi")
-					return
-				}
-			case 2:
-				// pengurutan dengan volume saham dengan insertion sort
-				fmt.Println("Mau diurutkan dari volume tertinggi atau terendah?")
-				fmt.Println("1. Tertinggi")
-				fmt.Println("2. Terendah")
-				fmt.Print("Masukkan pilihan menu > ")
-				var pilih_volume int
-				fmt.Scan(&pilih_volume)
-
-				if pilih_volume == 1 {
-					// pengurutan dari harga tertinggi
-					var n int = nSaham
-					var iterasi5, iterasi6 int
-					for iterasi5 = 1; iterasi5 < n; iterasi5++ {
-						var temp saham = A[iterasi5]
-						iterasi6 = iterasi5 - 1
-						for iterasi6 >= 0 && A[iterasi6].volume < temp.volume {
-							A[iterasi6+1] = A[iterasi6]
-							iterasi6--
-						}
-						A[iterasi6+1] = temp
-					}
-
-					// menampilkan hasil pengurutan
-					fmt.Println("Berikut merupakan hasil pengurutan : ")
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					for i = 0; i < nSaham; i++ {
-						// Tampilan ke user
-						fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[i].kode, A[i].nama, A[i].harga/1000, A[i].perubahan_persentase, A[i].volume)
-						fmt.Println()
-					}
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Print("Ketik X untuk kembali > ")
-					var kembali string
-					fmt.Scan(&kembali)
-					return
-
-				} else if pilih_volume == 2 {
-					// pengurutan dari harga terendah
-					var n int = nSaham
-					var iterasi7, iterasi8 int
-					for iterasi7 = 1; iterasi7 < n; iterasi7++ {
-						var temp saham = A[iterasi7]
-						iterasi8 = iterasi7 - 1
-						for iterasi8 >= 0 && A[iterasi8].volume > temp.volume {
-							A[iterasi8+1] = A[iterasi8]
-							iterasi8--
-						}
-						A[iterasi8+1] = temp
-					}
-
-					// menampilkan hasil pengurutan
-					fmt.Println("Berikut merupakan hasil pengurutan : ")
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					for i = 0; i < nSaham; i++ {
-						// Tampilan ke user
-						fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[i].kode, A[i].nama, A[i].harga/1000, A[i].perubahan_persentase, A[i].volume)
-						fmt.Println()
-					}
-					fmt.Println("_______________________________________________________________________________________________________________________")
-					fmt.Print("Ketik X untuk kembali > ")
-					var kembali string
-					fmt.Scan(&kembali)
-					return
-
-				} else {
-					fmt.Println("Pilihan tidak valid, silahkan coba lagi")
-					return
-				}
-			case 3:
-				// kembali ke menu daftar saham
-				daftar_saham(A)
-			}
+			menuSortSaham(A)
 		case 3:
 			// kembali ke main menu
 			return
 		}
 	}
+}
+
+func displayDaftarSaham(A *daftarSaham) {
+	var i int
+	fmt.Println("Daftar saham : ")
+	fmt.Println("_______________________________________________________________________________________________________________________")
+	fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
+	fmt.Println("_______________________________________________________________________________________________________________________")
+
+	for i = 0; i < nSaham; i++ {
+		// Tampilan ke user
+		fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[i].kode, A[i].nama, A[i].harga/1000, A[i].perubahan_persentase, A[i].volume)
+		fmt.Println()
+	}
+	fmt.Println("_______________________________________________________________________________________________________________________")
+	fmt.Println()
+}
+
+func pilihMenuDaftarSaham() int {
+	fmt.Println("Pilih menu")
+	fmt.Println("1. Cari saham")
+	fmt.Println("2. Urutkan saham")
+	fmt.Println("3. Kembali")
+	fmt.Print("Masukkan pilihan menu > ")
+	var pilih_daftar_menu_saham int
+	fmt.Scan(&pilih_daftar_menu_saham)
+	return pilih_daftar_menu_saham
+}
+
+func menuCariSaham(A *daftarSaham) {
+	fmt.Println("Pilih metode pencarian")
+	fmt.Println("1. Pencarian dengan kode saham")
+	fmt.Println("2. Pencarian dengan nama saham")
+	fmt.Println("3. Kembali")
+	fmt.Print("Masukkan pilihan menu > ")
+	var pilih_search int
+	fmt.Scan(&pilih_search)
+
+	switch pilih_search {
+	case 1:
+		// pencarian dengan kode saham dengan sequential search
+		var stringKode string = inputString("Masukkan kode saham > ")
+		var hasil int = sequential_search(*A, stringKode)
+		displayHasilCari(A, hasil)
+	case 2:
+		// pencarian dengan nama perusahaan saham dengan binary search
+		fmt.Println("Gunakan underscore (_) untuk spasi")
+		var stringNama string = inputString("Masukkan nama perusahaan > ")
+		var hasil int = binary_search(*A, stringNama)
+		displayHasilCari(A, hasil)
+	case 3:
+		// kembali ke menu daftar saham
+		return
+	}
+}
+
+func displayHasilCari(A *daftarSaham, hasil int) {
+	if hasil == -1 {
+		fmt.Println("Kode saham tidak ditemukan")
+	} else {
+		fmt.Println("Berikut merupakan hasil pencarian : ")
+		fmt.Println("_______________________________________________________________________________________________________________________")
+		fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
+		fmt.Println("_______________________________________________________________________________________________________________________")
+		// Tampilan ke user
+		fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[hasil].kode, A[hasil].nama, A[hasil].harga/1000, A[hasil].perubahan_persentase, A[hasil].volume)
+		fmt.Println()
+		fmt.Println("_______________________________________________________________________________________________________________________")
+		fmt.Print("Ketik X untuk kembali > ")
+		var kembali string
+		fmt.Scan(&kembali)
+		return
+	}
+}
+
+func menuSortSaham(A *daftarSaham) {
+	var pilih int = inputInt("Metode Pengurutan (1.Harga/2.Volume/3.Kembali) > ")
+
+	switch pilih {
+	case 1:
+		// pengurutan dengan harga saham dengan selection sort
+		subSortHarga(A)
+	case 2:
+		// pengurutan dengan volume saham dengan insertion sort
+		subSortVolume(A)
+	case 3:
+		// kembali ke menu daftar saham
+		return
+	}
+}
+
+func subSortHarga(A *daftarSaham) {
+	var urutan int = inputInt("Urutan (1.Tertinggi/2.Terendah) > ")
+	if urutan == 1 {
+		sortHargaDesc(A)
+	} else if urutan == 2 {
+		sortHargaAsc(A)
+	} else {
+		fmt.Println("Pilihan tidak valid")
+		return
+	}
+	displaySaham(A)
+}
+
+func subSortVolume(A *daftarSaham) {
+	var urutan int = inputInt("Urutan (1.Tertinggi/2.Terendah) > ")
+	if urutan == 1 {
+		sortVolumeDesc(A)
+	} else if urutan == 2 {
+		sortVolumeAsc(A)
+	} else {
+		fmt.Println("Pilihan tidak valid")
+		return
+	}
+	displaySaham(A)
+}
+
+func sortHargaDesc(A *daftarSaham) {
+	var temp saham
+	var n int = nSaham
+	var i, j, max int
+	for i = 0; i < n-1; i++ {
+		max = i
+		for j = i + 1; j < n; j++ {
+			if A[j].harga > A[max].harga {
+				max = j
+			}
+		}
+		temp = A[i]
+		A[i] = A[max]
+		A[max] = temp
+	}
+}
+
+func sortHargaAsc(A *daftarSaham) {
+	var temp saham
+	var n int = nSaham
+	var i, j, min int
+	for i = 0; i < n-1; i++ {
+		min = i
+		for j = i + 1; j < n; j++ {
+			if A[j].harga < A[min].harga {
+				min = j
+			}
+		}
+		temp = A[i]
+		A[i] = A[min]
+		A[min] = temp
+	}
+}
+
+func sortVolumeDesc(A *daftarSaham) {
+	var n int = nSaham
+	var i, j int
+	for i = 1; i < n; i++ {
+		var temp saham = A[i]
+		j = i - 1
+		for j >= 0 && A[j].volume < temp.volume {
+			A[j+1] = A[j]
+			j--
+		}
+		A[j+1] = temp
+	}
+}
+
+func sortVolumeAsc(A *daftarSaham) {
+	var n int = nSaham
+	var i, j int
+	for i = 1; i < n; i++ {
+		var temp saham = A[i]
+		j = i - 1
+		for j >= 0 && A[j].volume > temp.volume {
+			A[j+1] = A[j]
+			j--
+		}
+		A[j+1] = temp
+	}
+}
+
+func displaySaham(A *daftarSaham) {
+	var i int
+	fmt.Println("Berikut merupakan daftar saham setelah diurutkan : ")
+	fmt.Println("_______________________________________________________________________________________________________________________")
+	fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
+	fmt.Println("_______________________________________________________________________________________________________________________")
+	for i = 0; i < nSaham; i++ {
+		// Tampilan ke user
+		fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[i].kode, A[i].nama, A[i].harga/1000, A[i].perubahan_persentase, A[i].volume)
+		fmt.Println()
+	}
+	fmt.Println("_______________________________________________________________________________________________________________________")
+	fmt.Print("Ketik X untuk kembali > ")
+	var kembali string
+	fmt.Scan(&kembali)
+}
+
+func inputInt(words string) int {
+	fmt.Print(words)
+	var input int
+	fmt.Scan(&input)
+	return input
+}
+
+func inputString(words string) string {
+	fmt.Print(words)
+	var input string
+	fmt.Scan(&input)
+	return input
 }
 
 func transaksi_saham(A *daftarSaham, saldo *int) {
