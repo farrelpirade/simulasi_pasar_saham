@@ -508,153 +508,135 @@ func inputString(words string) string {
 
 func transaksi_saham(A *daftarSaham, saldo *int) {
 	// menu transaksi saham
-	fmt.Println("Transaksi saham")
-	fmt.Println("1. Beli saham")
-	fmt.Println("2. Jual saham")
-	fmt.Println("3. Kembali")
-	fmt.Print("Masukkan pilihan menu > ")
-	var pilih_transaksi int
-	fmt.Scan(&pilih_transaksi)
-	switch pilih_transaksi {
+	var pilih int = inputInt("Transaksi (1.Beli/2.Jual/3.Kembali) > ")
+	switch pilih {
 	case 1:
 		// menu beli saham
-		fmt.Print("Masukkan kode saham > ")
-		var beli_kode_saham string
-		fmt.Scan(&beli_kode_saham)
-		var hasil int = sequential_search(*A, beli_kode_saham)
-		if hasil == -1 {
-			fmt.Println("Kode saham tidak ditemukan")
-			transaksi_saham(A, saldo)
-		} else {
-			fmt.Println("Berikut merupakan hasil pencarian : ")
-			fmt.Println("_______________________________________________________________________________________________________________________")
-			fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
-			fmt.Println("_______________________________________________________________________________________________________________________")
-			// Tampilan ke user
-			fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[hasil].kode, A[hasil].nama, A[hasil].harga/1000, A[hasil].perubahan_persentase, A[hasil].volume)
-			fmt.Println()
-			fmt.Println("_______________________________________________________________________________________________________________________")
-		}
-
-		fmt.Print("Masukkan jumlah saham yang ingin dibeli > ")
-		var beli_jumlah_saham int
-		fmt.Scan(&beli_jumlah_saham)
-
-		// menampilkan saldo pengguna sekarang dengan mengambil dari variabel jumSaldo
-		var total_harga_sementara float64 = float64(beli_jumlah_saham) * A[hasil].harga
-		fmt.Printf("Saldo anda sekarang adalah %d \n", *saldo)
-		if total_harga_sementara > float64(*saldo) {
-			fmt.Println("Saldo anda tidak cukup")
-			transaksi_saham(A, saldo)
-		} else if beli_jumlah_saham < 0 {
-			fmt.Println("Jumlah saham tidak valid")
-			transaksi_saham(A, saldo)
-		} else if beli_jumlah_saham > A[hasil].volume {
-			fmt.Println("Jumlah saham yang ingin dibeli melebihi volume saham")
-			transaksi_saham(A, saldo)
-		} else {
-			var total_harga float64 = float64(beli_jumlah_saham) * A[hasil].harga
-
-			fmt.Printf("Total harga yang harus dibayar adalah Rp%.2f \n", total_harga)
-			fmt.Printf("Saldo anda sekarang adalah %d \n", *saldo)
-
-			// melanjutkan pembayaran
-			fmt.Print("Bayar ? (y/n) > ")
-			var pilih_bayar string
-			fmt.Scan(&pilih_bayar)
-			if pilih_bayar == "y" || pilih_bayar == "Y" {
-				// menambahkan ke portofolio
-				ownedSaham[hasil] += beli_jumlah_saham
-
-				// melakukan pembayaran
-				*saldo -= int(total_harga)
-				A[hasil].volume -= beli_jumlah_saham
-
-				// menambahkan ke history transaksi
-				if hitungHistori < nHistori {
-					histori[hitungHistori].kode_saham_transaksi = A[hasil].kode
-					histori[hitungHistori].nama_saham_transaksi = A[hasil].nama
-					histori[hitungHistori].jumlah_saham_transaksi = beli_jumlah_saham
-					histori[hitungHistori].harga_lembar_saham_transaksi = A[hasil].harga
-					histori[hitungHistori].harga_total_transaksi = total_harga
-					histori[hitungHistori].jenis_transaksi = "Beli"
-					hitungHistori++
-				}
-
-				fmt.Println("Pembayaran berhasil")
-				fmt.Printf("Sisa volume saham %s adalah %d \n", A[hasil].kode, A[hasil].volume)
-				fmt.Printf("Sisa saldo anda adalah %d \n", *saldo)
-				fmt.Print("Ketik X untuk kembali > ")
-				var kembali string
-				fmt.Scan(&kembali)
-				return
-			} else if pilih_bayar == "n" || pilih_bayar == "N" {
-				fmt.Println("Pembayaran dibatalkan")
-				transaksi_saham(A, saldo)
-			} else {
-				fmt.Println("Pilihan tidak valid")
-				transaksi_saham(A, saldo)
-			}
-		}
-
+		handleBeliSaham(A, saldo)
 	case 2:
 		// menu jual saham
-		fmt.Print("Masukkan kode saham > ")
-		var jual_kode_saham string
-		fmt.Scan(&jual_kode_saham)
-		var hasil int = sequential_search(*A, jual_kode_saham)
-		if hasil == -1 {
-			fmt.Println("Kode saham tidak ditemukan")
-			transaksi_saham(A, saldo)
-		} else {
-			fmt.Println("Berikut merupakan hasil pencarian : ")
-			fmt.Println("_______________________________________________________________________________________________________________________")
-			fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
-			fmt.Println("_______________________________________________________________________________________________________________________")
-			// Tampilan ke user
-			fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[hasil].kode, A[hasil].nama, A[hasil].harga/1000, A[hasil].perubahan_persentase, A[hasil].volume)
-			fmt.Println()
-			fmt.Println("_______________________________________________________________________________________________________________________")
-		}
-
-		fmt.Print("Masukkan jumlah saham yang ingin dijual > ")
-		var jual_jumlah_saham int
-		fmt.Scan(&jual_jumlah_saham)
-		// menampilkan saldo pengguna sekarang dengan mengambil dari variabel jumSaldo
-		fmt.Printf("Saldo anda sekarang adalah %d \n", *saldo)
-		if jual_jumlah_saham < 0 {
-			fmt.Println("Jumlah saham tidak valid")
-			transaksi_saham(A, saldo)
-		} else if jual_jumlah_saham > ownedSaham[hasil] {
-			fmt.Println("Jumlah saham yang ingin dijual melebihi volume saham")
-			transaksi_saham(A, saldo)
-		} else {
-			// portofolio
-			ownedSaham[hasil] -= jual_jumlah_saham
-
-			// mendapatkan pendapatan dari penjualan saham
-			var jual_pendapatan float64 = float64(jual_jumlah_saham) * A[hasil].harga
-			*saldo += int(jual_pendapatan)
-			A[hasil].volume += jual_jumlah_saham
-			fmt.Printf("Volume saham %s sekarang adalah %d \n", A[hasil].kode, A[hasil].volume)
-			var total_pendapatan float64 = float64(jual_jumlah_saham) * A[hasil].harga
-			fmt.Printf("Anda mendapat Rp%.2f \n", total_pendapatan)
-			fmt.Printf("Saldo anda sekarang adalah %d \n", *saldo)
-
-			// menambahkan ke history transaksi
-			if hitungHistori < nHistori {
-				histori[hitungHistori].kode_saham_transaksi = A[hasil].kode
-				histori[hitungHistori].nama_saham_transaksi = A[hasil].nama
-				histori[hitungHistori].jumlah_saham_transaksi = jual_jumlah_saham
-				histori[hitungHistori].harga_lembar_saham_transaksi = A[hasil].harga
-				histori[hitungHistori].harga_total_transaksi = total_pendapatan
-				histori[hitungHistori].jenis_transaksi = "Jual"
-				hitungHistori++
-			}
-		}
+		handleJualSaham(A, saldo)
 	case 3:
 		// kembali ke main menu
 		return
+	}
+}
+
+func handleBeliSaham(A *daftarSaham, saldo *int) {
+	var beli_kode_saham string = inputString("Masukkan kode saham > ")
+	var hasil int = sequential_search(*A, beli_kode_saham)
+	displayHasilCariTransaksi(A, hasil, saldo)
+	var beli_jumlah_saham int = inputInt("Masukkan jumlah saham yang ingin dibeli > ")
+
+	// menamppilkan saldo pengguna
+	var total_harga_sementara float64 = float64(beli_jumlah_saham) * A[hasil].harga
+	fmt.Printf("Saldo anda sekarang adalah %d \n", *saldo)
+	if total_harga_sementara > float64(*saldo) {
+		fmt.Println("Saldo anda tidak cukup")
+		transaksi_saham(A, saldo)
+	} else if beli_jumlah_saham < 0 {
+		fmt.Println("Jumlah saham tidak valid")
+		transaksi_saham(A, saldo)
+	} else if beli_jumlah_saham > A[hasil].volume {
+		fmt.Println("Jumlah saham yang ingin dibeli melebihi volume saham")
+		transaksi_saham(A, saldo)
+	} else {
+		var total_harga float64 = float64(beli_jumlah_saham) * A[hasil].harga
+
+		fmt.Printf("Total harga yang harus dibayar adalah Rp%.2f \n", total_harga)
+		fmt.Printf("Saldo anda sekarang adalah %d \n", *saldo)
+
+		// melanjutkan pembayaran
+		fmt.Print("Bayar ? (y/n) > ")
+		var pilih_bayar string
+		fmt.Scan(&pilih_bayar)
+		if pilih_bayar == "y" || pilih_bayar == "Y" {
+			// menambahkan ke portofolio
+			ownedSaham[hasil] += beli_jumlah_saham
+
+			// melakukan pembayaran
+			*saldo -= int(total_harga)
+			A[hasil].volume -= beli_jumlah_saham
+
+			// menambahkan ke history transaksi
+			tambahHistori(&histori, "Beli", A[hasil].kode, A[hasil].nama, beli_jumlah_saham, A[hasil].harga, total_harga)
+
+			fmt.Println("Pembayaran berhasil")
+			fmt.Printf("Sisa volume saham %s adalah %d \n", A[hasil].kode, A[hasil].volume)
+			fmt.Printf("Sisa saldo anda adalah %d \n", *saldo)
+			fmt.Print("Ketik X untuk kembali > ")
+			var kembali string
+			fmt.Scan(&kembali)
+			return
+		} else if pilih_bayar == "n" || pilih_bayar == "N" {
+			fmt.Println("Pembayaran dibatalkan")
+			transaksi_saham(A, saldo)
+		} else {
+			fmt.Println("Pilihan tidak valid")
+			transaksi_saham(A, saldo)
+		}
+	}
+}
+
+func handleJualSaham(A *daftarSaham, saldo *int) {
+	var jual_kode_saham string = inputString("Masukkan kode saham yang ingin dijual > ")
+	var hasil int = sequential_search(*A, jual_kode_saham)
+	displayHasilCariTransaksi(A, hasil, saldo)
+
+	fmt.Print("Masukkan jumlah saham yang ingin dijual > ")
+	var jual_jumlah_saham int
+	fmt.Scan(&jual_jumlah_saham)
+	// menampilkan saldo pengguna sekarang dengan mengambil dari variabel jumSaldo
+	fmt.Printf("Saldo anda sekarang adalah %d \n", *saldo)
+	if jual_jumlah_saham < 0 {
+		fmt.Println("Jumlah saham tidak valid")
+		transaksi_saham(A, saldo)
+	} else if jual_jumlah_saham > ownedSaham[hasil] {
+		fmt.Println("Jumlah saham yang ingin dijual melebihi volume saham")
+		transaksi_saham(A, saldo)
+	} else {
+		// portofolio
+		ownedSaham[hasil] -= jual_jumlah_saham
+
+		// mendapatkan pendapatan dari penjualan saham
+		var jual_pendapatan float64 = float64(jual_jumlah_saham) * A[hasil].harga
+		*saldo += int(jual_pendapatan)
+		A[hasil].volume += jual_jumlah_saham
+		fmt.Printf("Volume saham %s sekarang adalah %d \n", A[hasil].kode, A[hasil].volume)
+		var total_pendapatan float64 = float64(jual_jumlah_saham) * A[hasil].harga
+		fmt.Printf("Anda mendapat Rp%.2f \n", total_pendapatan)
+		fmt.Printf("Saldo anda sekarang adalah %d \n", *saldo)
+
+		// menambahkan ke history transaksi
+		tambahHistori(&histori, "Jual", A[hasil].kode, A[hasil].nama, jual_jumlah_saham, A[hasil].harga, total_pendapatan)
+	}
+}
+
+func displayHasilCariTransaksi(A *daftarSaham, hasil int, saldo *int) {
+	if hasil == -1 {
+		fmt.Println("Kode saham tidak ditemukan")
+		transaksi_saham(A, saldo)
+	} else {
+		fmt.Println("Berikut merupakan hasil pencarian : ")
+		fmt.Println("_______________________________________________________________________________________________________________________")
+		fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
+		fmt.Println("_______________________________________________________________________________________________________________________")
+		// Tampilan ke user
+		fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[hasil].kode, A[hasil].nama, A[hasil].harga/1000, A[hasil].perubahan_persentase, A[hasil].volume)
+		fmt.Println()
+		fmt.Println("_______________________________________________________________________________________________________________________")
+	}
+}
+
+func tambahHistori(histori *[nHistori]arrTransaksi, jenis string, kode string, nama string, jumlah int, harga float64, total float64) {
+	if hitungHistori < nHistori {
+		histori[hitungHistori].kode_saham_transaksi = kode
+		histori[hitungHistori].nama_saham_transaksi = nama
+		histori[hitungHistori].jumlah_saham_transaksi = jumlah
+		histori[hitungHistori].harga_lembar_saham_transaksi = harga
+		histori[hitungHistori].harga_total_transaksi = total
+		histori[hitungHistori].jenis_transaksi = jenis
+		hitungHistori++
 	}
 }
 
