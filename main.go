@@ -683,7 +683,6 @@ func histori_transaksi(h *[nHistori]arrTransaksi, hitungHistori int) {
 	var kembali string
 	fmt.Scan(&kembali)
 	return
-
 }
 
 func bantuan(pilih_bantuan int) {
@@ -698,16 +697,21 @@ func bantuan(pilih_bantuan int) {
 	switch pilih_bantuan {
 	case 1:
 		var opsi_about int
-		fmt.Println("Aplikasi ini adalah aplikasi simulasi pasar saham virtual yang dibuat dengan menggunakan bahasa Go.")
-		fmt.Println("Aplikasi ini dibuat sebagai bentuk pelaksanaan tugas besar dari mata kuliah Algoritma dan Pemrograman 2")
-		fmt.Println("Aplikasi ini memungkinkan pengguna untuk mensimulasikan perdagangan saham dengan menggunakan saldo virtual. Data utama yang digunakan adalah daftar saham, harga saham yang berubah, dan portofolio pengguna. Pengguna aplikasi adalah individu yang ingin belajar cara trading saham tanpa risiko nyata.")
-		fmt.Println("Spesifikasi :")
-		fmt.Println("a. Pengguna dapat menambahkan, mengubah, dan menghapus transaksi pembelian dan penjualan saham.")
-		fmt.Println("b. Sistem menghitung perubahan nilai portofolio berdasarkan fluktuasi harga saham.")
-		fmt.Println("c. Pengguna dapat mencari saham berdasarkan kode atau nama perusahaan menggunakan Sequential dan Binary Search.")
-		fmt.Println("d. Pengguna dapat mengurutkan saham berdasarkan harga tertinggi atau volume transaksi menggunakan Selection dan Insertion Sort.")
-		fmt.Println("Sistem menampilkan statistik keuntungan dan kerugian pengguna dalam simulasi trading.")
-		fmt.Println("Pembuat : Kanaka Pradipta Arya Wismaya & Farrel Malik Pirade")
+		fmt.Println("+-------------------------------------------------------+" )
+			fmt.Println("| Aplikasi ini adalah aplikasi simulasi pasar saham     |" )
+			fmt.Println("| virtual yang dibuat dengan menggunakan bahasa Go.     |" )
+			fmt.Println("| Aplikasi ini dibuat sebagai tugas besar Algoritma     |" )
+			fmt.Println("| dan Pemrograman 2.                                    |" )
+			fmt.Println("|                                                       |" )
+			fmt.Println("| Spesifikasi:                                          |" )
+			fmt.Println("| a. Tambah, ubah, hapus transaksi beli/jual saham.     |" )
+			fmt.Println("| b. Hitung nilai portofolio berdasarkan fluktuasi.     |" )
+			fmt.Println("| c. Cari saham dengan Sequential & Binary Search.      |" )
+			fmt.Println("| d. Urut saham berdasarkan harga/volume transaksi.     |" )
+			fmt.Println("| menggunakan Selection & Insertion Sort                |" )
+			fmt.Println("| Pembuat: Kanaka Pradipta Arya Wismaya & Farrel Malik  |" )
+			fmt.Println("| Pirade                                                |" )
+			fmt.Println("+-------------------------------------------------------+" )
 		fmt.Println()
 		fmt.Print("Untuk kembali, pilih 0 > ")
 		fmt.Scan(&opsi_about)
@@ -717,16 +721,16 @@ func bantuan(pilih_bantuan int) {
 
 	case 2:
 		var opsi_tutorial int
-		fmt.Println("Cara menggunakan aplikasi ini adalah dengan memilih menu yang tersedia.")
-		fmt.Println("Berikut merupakan penjelasan dari masing-masing menu utama :")
-		fmt.Println("1. Saldo anda : Menampilkan saldo yang anda miliki, serta melakukan top up dan withdraw.")
-		fmt.Println("2. Daftar saham : Menampilkan daftar saham yang tersedia dan yang dibantu dengan fitur pencarian dan pengurutan.")
-		fmt.Println("3. Transaksi saham : Melakukan transaksi pembelian dan penjualan saham dengan fitur pencarian dan pengurutan.")
-		fmt.Println("4. Portofolio : Menampilkan portofolio yang anda miliki.")
-		fmt.Println("5. Histori transaksi : Menampilkan histori transaksi yang pernah anda lakukan.")
-		fmt.Println("6. Artikel saham : Menampilkan artikel yang berisi informasi-informasi menarik tentang saham.")
-		fmt.Println("7. Bantuan : Menampilkan informasi tentang aplikasi dan cara menggunakan aplikasi.")
-		fmt.Println("8. Keluar : Keluar dari aplikasi.")
+		fmt.Println("+------------------------------------------------------+" )
+			fmt.Println("| Cara menggunakan aplikasi:                            |" )
+			fmt.Println("| 1. Saldo: Cek saldo, top up, withdraw.                |" )
+			fmt.Println("| 2. Daftar saham: Lihat, cari, urut daftar saham.      |" )
+			fmt.Println("| 3. Transaksi saham: Beli/jual dengan pencarian & urut.|" )
+			fmt.Println("| 4. Portofolio: Lihat portofolio Anda.                 |" )
+			fmt.Println("| 5. Histori: Lihat riwayat transaksi.                  |" )
+			fmt.Println("| 6. Bantuan: Menu bantuan.                             |" )
+			fmt.Println("| 7. Keluar: Tutup aplikasi.                            |" )
+			fmt.Println("+------------------------------------------------------+" )
 		fmt.Println()
 		fmt.Print("Untuk kembali, ketik 0 > ")
 		fmt.Scan(&opsi_tutorial)
