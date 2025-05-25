@@ -721,7 +721,7 @@ func bantuan(pilih_bantuan int) {
 
 	case 2:
 		var opsi_tutorial int
-		fmt.Println("+------------------------------------------------------+" )
+		fmt.Println("+-------------------------------------------------------+" )
 			fmt.Println("| Cara menggunakan aplikasi:                            |" )
 			fmt.Println("| 1. Saldo: Cek saldo, top up, withdraw.                |" )
 			fmt.Println("| 2. Daftar saham: Lihat, cari, urut daftar saham.      |" )
@@ -730,7 +730,7 @@ func bantuan(pilih_bantuan int) {
 			fmt.Println("| 5. Histori: Lihat riwayat transaksi.                  |" )
 			fmt.Println("| 6. Bantuan: Menu bantuan.                             |" )
 			fmt.Println("| 7. Keluar: Tutup aplikasi.                            |" )
-			fmt.Println("+------------------------------------------------------+" )
+			fmt.Println("+-------------------------------------------------------+" )
 		fmt.Println()
 		fmt.Print("Untuk kembali, ketik 0 > ")
 		fmt.Scan(&opsi_tutorial)
