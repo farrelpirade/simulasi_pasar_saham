@@ -643,9 +643,9 @@ func tambahHistori(histori *[nHistori]arrTransaksi, jenis string, kode string, n
 func portofolio() {
 	// menu portofolio
 	fmt.Println("Berikut merupakan portofolio anda : ")
-	fmt.Println("_______________________________________________________________________________________________________________________")
-	fmt.Printf("| %-6s | %-8s | %-10s | %-6s | %-10s |\n", "Kode", "Lembar", "Harga/Unit", "Perubahan %", "Total")
-	fmt.Println("_______________________________________________________________________________________________________________________")
+	fmt.Println("________________________________________________________________")
+	fmt.Printf("| %-6s | %-8s | %-10s | %-10s | %-10s |\n", "Kode", "Lembar", "Harga/Unit", "Perubahan %", "Total")
+	fmt.Println("________________________________________________________________")
 
 	// Tampilan ke user
 	var i int
@@ -654,7 +654,7 @@ func portofolio() {
 		banyak_kepunyaan = ownedSaham[i]
 		if banyak_kepunyaan > 0 {
 			var total_kepunyaan float64 = float64(banyak_kepunyaan) * listSaham[i].harga
-			fmt.Printf("| %-6s | %-8d | Rp%-10.3f | %-6.2f | Rp%-10.3f |\n", listSaham[i].kode, banyak_kepunyaan, listSaham[i].harga/1000, listSaham[i].perubahan_persentase, total_kepunyaan/1000)
+			fmt.Printf("| %-6s | %-8d | Rp%-10.3f | %-10.2f | Rp%-10.3f |\n", listSaham[i].kode, banyak_kepunyaan, listSaham[i].harga/1000, listSaham[i].perubahan_persentase, total_kepunyaan/1000)
 		}
 	}
 	fmt.Print("\n Ketik X untuk kembali > ")
@@ -666,11 +666,11 @@ func portofolio() {
 func histori_transaksi(h *[nHistori]arrTransaksi, hitungHistori int) {
 	// menu histori transaksi
 	fmt.Println("Berikut merupakan histori transaksi anda : ")
-	fmt.Printf("| %-6s | %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Jenis", "Kode", "Nama Perusahaan", "Jumlah", "Harga/Unit", "Total")
+	fmt.Printf("%s\t %s\t %s\t\t\t %s\t %s\t %s\n", "Jenis", "Kode", "Nama Perusahaan", "Jumlah", "Harga/Unit", "Total")
 
 	var i int
 	for i = 0; i < hitungHistori; i++ {
-		fmt.Printf("%s\t %s\t %s\t %d\t %.2f\t %.2f\n",
+		fmt.Printf("%s\t %s\t %s\t\t %d\t %.2f\t\t %.2f\n",
 			h[i].jenis_transaksi,
 			h[i].kode_saham_transaksi,
 			h[i].nama_saham_transaksi,
