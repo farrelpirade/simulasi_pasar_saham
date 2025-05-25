@@ -172,7 +172,11 @@ func randomisasi(A *daftarSaham) {
 		}
 
 		//Randomisasi perubahan persentase saham
-		A[i].perubahan_persentase = float64(rand.Intn(100)) + 1
+		if rand.Intn(2) == 0 {
+			A[i].perubahan_persentase = -1 * (float64(rand.Intn(100)) + 1)
+		} else {
+			A[i].perubahan_persentase = float64(rand.Intn(100)) + 1
+		}
 
 		// Randomisasi volume saham dengan fluktuasi kurang lebih antara 100 hingga 3000000000
 		A[i].volume = rand.Intn(3000000000) + 100
@@ -307,7 +311,7 @@ func displayDaftarSaham(A *daftarSaham) {
 
 	for i = 0; i < nSaham; i++ {
 		// Tampilan ke user
-		fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[i].kode, A[i].nama, A[i].harga/1000, A[i].perubahan_persentase, A[i].volume)
+		fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %+15.2f | %-30d |", A[i].kode, A[i].nama, A[i].harga/1000, A[i].perubahan_persentase, A[i].volume)
 		fmt.Println()
 	}
 	fmt.Println("_______________________________________________________________________________________________________________________")
@@ -361,7 +365,7 @@ func displayHasilCari(A *daftarSaham, hasil int) {
 		fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
 		fmt.Println("_______________________________________________________________________________________________________________________")
 		// Tampilan ke user
-		fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[hasil].kode, A[hasil].nama, A[hasil].harga/1000, A[hasil].perubahan_persentase, A[hasil].volume)
+		fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %+15.2f | %-30d |", A[hasil].kode, A[hasil].nama, A[hasil].harga/1000, A[hasil].perubahan_persentase, A[hasil].volume)
 		fmt.Println()
 		fmt.Println("_______________________________________________________________________________________________________________________")
 		fmt.Print("Ketik X untuk kembali > ")
@@ -483,7 +487,7 @@ func displaySaham(A *daftarSaham) {
 	fmt.Println("_______________________________________________________________________________________________________________________")
 	for i = 0; i < nSaham; i++ {
 		// Tampilan ke user
-		fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[i].kode, A[i].nama, A[i].harga/1000, A[i].perubahan_persentase, A[i].volume)
+		fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %+15.2f | %-30d |", A[i].kode, A[i].nama, A[i].harga/1000, A[i].perubahan_persentase, A[i].volume)
 		fmt.Println()
 	}
 	fmt.Println("_______________________________________________________________________________________________________________________")
@@ -622,7 +626,7 @@ func displayHasilCariTransaksi(A *daftarSaham, hasil int, saldo *int) {
 		fmt.Printf("| %-6s | %-40s | %-10s | %-15s | %-30s |\n", "Kode", "Nama Perusahaan", "Harga", "Perubahan %", "Volume")
 		fmt.Println("_______________________________________________________________________________________________________________________")
 		// Tampilan ke user
-		fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %-15.2f | %-30d |", A[hasil].kode, A[hasil].nama, A[hasil].harga/1000, A[hasil].perubahan_persentase, A[hasil].volume)
+		fmt.Printf("| %-6s | %-40s | Rp%-10.3f | %+15.2f | %-30d |", A[hasil].kode, A[hasil].nama, A[hasil].harga/1000, A[hasil].perubahan_persentase, A[hasil].volume)
 		fmt.Println()
 		fmt.Println("_______________________________________________________________________________________________________________________")
 	}
@@ -654,7 +658,7 @@ func portofolio() {
 		banyak_kepunyaan = ownedSaham[i]
 		if banyak_kepunyaan > 0 {
 			var total_kepunyaan float64 = float64(banyak_kepunyaan) * listSaham[i].harga
-			fmt.Printf("| %-6s | %-8d | Rp%-10.3f | %-10.2f | Rp%-10.3f |\n", listSaham[i].kode, banyak_kepunyaan, listSaham[i].harga/1000, listSaham[i].perubahan_persentase, total_kepunyaan/1000)
+			fmt.Printf("| %-6s | %-8d | Rp%-10.3f | %+10.2f | Rp%-10.3f |\n", listSaham[i].kode, banyak_kepunyaan, listSaham[i].harga/1000, listSaham[i].perubahan_persentase, total_kepunyaan/1000)
 		}
 	}
 	fmt.Print("\n Ketik X untuk kembali > ")
