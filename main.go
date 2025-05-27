@@ -108,7 +108,6 @@ const asciiArt = `
 func main() {
 	// program main merupakan interface awal aplikasi saat dibuka
 	rand.Seed(time.Now().UnixNano())
-	randomisasi(&listSaham)
 	initKodeNama()
 	var jumSaldo int
 	var pilihan int
@@ -281,6 +280,7 @@ func binary_search(A daftarSaham, nama_saham string) int {
 }
 
 func daftar_saham(A *daftarSaham) {
+	randomisasi(A)
 	sel_sort_for_bin_search(A)
 	var pilih int = pilihMenuDaftarSaham()
 	// beberapa daftar saham yang bisa diakses
@@ -512,9 +512,11 @@ func transaksi_saham(A *daftarSaham, saldo *int) {
 		switch pilih {
 		case 1:
 			// menu beli saham
+			randomisasi(A) 
 			handleBeliSaham(A, saldo)
 		case 2:
 			// menu jual saham
+			randomisasi(A)
 			handleJualSaham(A, saldo)
 		}
 	}
