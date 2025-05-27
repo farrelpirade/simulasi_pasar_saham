@@ -185,8 +185,9 @@ func randomisasi(A *daftarSaham) {
 
 func saldo(s *int) {
 	// prosedur saldo untuk menampilkan saldo, top up, dan withdraw
-	for {
-		var pilihan int
+	var pilihan int
+	for pilihan != 3 {
+		//var pilihan int
 		fmt.Printf("Saldo anda adalah %d \n", *s)
 		fmt.Println("1. Top up")
 		fmt.Println("2. Withdraw")
@@ -201,8 +202,6 @@ func saldo(s *int) {
 		case 2:
 			// melakukan withdraw
 			handlerWithdraw(s)
-		case 3:
-			return
 		}
 	}
 }
@@ -283,11 +282,10 @@ func binary_search(A daftarSaham, nama_saham string) int {
 
 func daftar_saham(A *daftarSaham) {
 	sel_sort_for_bin_search(A)
-
+	var pilih int = pilihMenuDaftarSaham()
 	// beberapa daftar saham yang bisa diakses
-	for {
+	for pilih != 3 {
 		displayDaftarSaham(A)
-		var pilih int = pilihMenuDaftarSaham()
 		switch pilih {
 		case 1:
 			// menu searching saham
@@ -295,9 +293,6 @@ func daftar_saham(A *daftarSaham) {
 		case 2:
 			// menu sorting saham
 			menuSortSaham(A)
-		case 3:
-			// kembali ke main menu
-			return
 		}
 	}
 }
@@ -513,16 +508,15 @@ func inputString(words string) string {
 func transaksi_saham(A *daftarSaham, saldo *int) {
 	// menu transaksi saham
 	var pilih int = inputInt("Transaksi (1.Beli/2.Jual/3.Kembali) > ")
-	switch pilih {
-	case 1:
-		// menu beli saham
-		handleBeliSaham(A, saldo)
-	case 2:
-		// menu jual saham
-		handleJualSaham(A, saldo)
-	case 3:
-		// kembali ke main menu
-		return
+	for pilih != 3 {
+		switch pilih {
+		case 1:
+			// menu beli saham
+			handleBeliSaham(A, saldo)
+		case 2:
+			// menu jual saham
+			handleJualSaham(A, saldo)
+		}
 	}
 }
 
@@ -698,52 +692,50 @@ func bantuan(pilih_bantuan int) {
 	fmt.Print("Masukkan pilihan menu > ")
 	fmt.Scan(&pilih_bantuan)
 
-	switch pilih_bantuan {
-	case 1:
-		var opsi_about int
-		fmt.Println("+-------------------------------------------------------+" )
-			fmt.Println("| Aplikasi ini adalah aplikasi simulasi pasar saham     |" )
-			fmt.Println("| virtual yang dibuat dengan menggunakan bahasa Go.     |" )
-			fmt.Println("| Aplikasi ini dibuat sebagai tugas besar Algoritma     |" )
-			fmt.Println("| dan Pemrograman 2.                                    |" )
-			fmt.Println("|                                                       |" )
-			fmt.Println("| Spesifikasi:                                          |" )
-			fmt.Println("| a. Tambah, ubah, hapus transaksi beli/jual saham.     |" )
-			fmt.Println("| b. Hitung nilai portofolio berdasarkan fluktuasi.     |" )
-			fmt.Println("| c. Cari saham dengan Sequential & Binary Search.      |" )
-			fmt.Println("| d. Urut saham berdasarkan harga/volume transaksi.     |" )
-			fmt.Println("| menggunakan Selection & Insertion Sort                |" )
-			fmt.Println("| Pembuat: Kanaka Pradipta Arya Wismaya & Farrel Malik  |" )
-			fmt.Println("| Pirade                                                |" )
-			fmt.Println("+-------------------------------------------------------+" )
-		fmt.Println()
-		fmt.Print("Untuk kembali, pilih 0 > ")
-		fmt.Scan(&opsi_about)
-		if opsi_about == 0 {
-			bantuan(pilih_bantuan)
-		}
+	for pilih_bantuan != 3 {
+		switch pilih_bantuan {
+		case 1:
+			var opsi_about int
+			fmt.Println("+-------------------------------------------------------+")
+			fmt.Println("| Aplikasi ini adalah aplikasi simulasi pasar saham     |")
+			fmt.Println("| virtual yang dibuat dengan menggunakan bahasa Go.     |")
+			fmt.Println("| Aplikasi ini dibuat sebagai tugas besar Algoritma     |")
+			fmt.Println("| dan Pemrograman 2.                                    |")
+			fmt.Println("|                                                       |")
+			fmt.Println("| Spesifikasi:                                          |")
+			fmt.Println("| a. Tambah, ubah, hapus transaksi beli/jual saham.     |")
+			fmt.Println("| b. Hitung nilai portofolio berdasarkan fluktuasi.     |")
+			fmt.Println("| c. Cari saham dengan Sequential & Binary Search.      |")
+			fmt.Println("| d. Urut saham berdasarkan harga/volume transaksi.     |")
+			fmt.Println("| menggunakan Selection & Insertion Sort                |")
+			fmt.Println("| Pembuat: Kanaka Pradipta Arya Wismaya & Farrel Malik  |")
+			fmt.Println("| Pirade                                                |")
+			fmt.Println("+-------------------------------------------------------+")
+			fmt.Println()
+			fmt.Print("Untuk kembali, pilih 0 > ")
+			fmt.Scan(&opsi_about)
+			if opsi_about == 0 {
+				bantuan(pilih_bantuan)
+			}
 
-	case 2:
-		var opsi_tutorial int
-		fmt.Println("+-------------------------------------------------------+" )
-			fmt.Println("| Cara menggunakan aplikasi:                            |" )
-			fmt.Println("| 1. Saldo: Cek saldo, top up, withdraw.                |" )
-			fmt.Println("| 2. Daftar saham: Lihat, cari, urut daftar saham.      |" )
-			fmt.Println("| 3. Transaksi saham: Beli/jual dengan pencarian & urut.|" )
-			fmt.Println("| 4. Portofolio: Lihat portofolio Anda.                 |" )
-			fmt.Println("| 5. Histori: Lihat riwayat transaksi.                  |" )
-			fmt.Println("| 6. Bantuan: Menu bantuan.                             |" )
-			fmt.Println("| 7. Keluar: Tutup aplikasi.                            |" )
-			fmt.Println("+-------------------------------------------------------+" )
-		fmt.Println()
-		fmt.Print("Untuk kembali, ketik 0 > ")
-		fmt.Scan(&opsi_tutorial)
-		if opsi_tutorial == 0 {
-			bantuan(pilih_bantuan)
+		case 2:
+			var opsi_tutorial int
+			fmt.Println("+-------------------------------------------------------+")
+			fmt.Println("| Cara menggunakan aplikasi:                            |")
+			fmt.Println("| 1. Saldo: Cek saldo, top up, withdraw.                |")
+			fmt.Println("| 2. Daftar saham: Lihat, cari, urut daftar saham.      |")
+			fmt.Println("| 3. Transaksi saham: Beli/jual dengan pencarian & urut.|")
+			fmt.Println("| 4. Portofolio: Lihat portofolio Anda.                 |")
+			fmt.Println("| 5. Histori: Lihat riwayat transaksi.                  |")
+			fmt.Println("| 6. Bantuan: Menu bantuan.                             |")
+			fmt.Println("| 7. Keluar: Tutup aplikasi.                            |")
+			fmt.Println("+-------------------------------------------------------+")
+			fmt.Println()
+			fmt.Print("Untuk kembali, ketik 0 > ")
+			fmt.Scan(&opsi_tutorial)
+			if opsi_tutorial == 0 {
+				bantuan(pilih_bantuan)
+			}
 		}
-
-	case 3:
-		// kembali ke main menu
-		return
 	}
 }
