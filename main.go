@@ -195,7 +195,6 @@ func saldo(s *int) {
 	// prosedur saldo untuk menampilkan saldo, top up, dan withdraw
 	var pilihan int
 	for pilihan != 3 {
-		//var pilihan int
 		fmt.Printf("Saldo anda adalah %d \n", *s)
 		fmt.Println("1. Top up")
 		fmt.Println("2. Withdraw")
