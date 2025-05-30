@@ -42,6 +42,9 @@ type daftarSaham [nSaham]saham
 // inisialisasi kode saham dan nama perusahaan
 var listSaham daftarSaham
 
+// variabel untuk handle nSaham di menu penjual
+var countSaham int = nSaham
+
 func initKodeNama() {
 	var kode [nSaham]string
 	var nama [nSaham]string
@@ -112,8 +115,8 @@ func main() {
 	var jumSaldo int
 	var pilihan int
 
-	// selama pilihan tidak 7 (keluar), program akan terus berjalan
-	for pilihan != 7 {
+	// selama pilihan tidak 8 (keluar), program akan terus berjalan
+	for pilihan != 8 {
 		displayMainMenu()
 		fmt.Scan(&pilihan)
 
@@ -138,6 +141,10 @@ func main() {
 			var pilih_bantuan int
 			bantuan(pilih_bantuan)
 		case 7:
+			// fitur penjual
+			var pilih_menu_jual int
+			penjual(pilih_menu_jual)
+		case 8:
 		}
 
 		fmt.Println()
@@ -157,7 +164,8 @@ func displayMainMenu() {
 	fmt.Println("4. Portofolio")
 	fmt.Println("5. Histori transaksi")
 	fmt.Println("6. Bantuan")
-	fmt.Println("7. Keluar")
+	fmt.Println("7. Menu penjual")
+	fmt.Println("8. Keluar")
 	fmt.Print("Masukkan pilihan menu > ")
 }
 
@@ -762,6 +770,64 @@ func bantuan(pilih_bantuan int) {
 			fmt.Println()
 			fmt.Print("Untuk kembali, ketik 0 > ")
 			fmt.Scan(&opsi_tutorial)
+		case 3:
+		}
+	}
+}
+
+func penjual(pilih_menu_jual int) {
+	for pilih_menu_jual != 3 {
+		pilih_menu_jual = inputInt("Pilih menu penjual (1.Hapus Saham/2.Tambah Saham/3.Kembali) > ")
+		switch pilih_menu_jual {
+		case 1:
+			// menu hapus saham
+			var kode string
+			fmt.Print("masukkan kode saham yang ingin dihapus > ")
+			fmt.Scan(&kode)
+			var idx int = sequential_search(listSaham, kode)
+			if idx == -1 || idx >= countSaham {
+				fmt.Println("Kode saham tidak ditemukan.")
+			} else {
+				var i int = idx
+				for i < countSaham-1 {
+					listSaham[i] = listSaham[i+1]
+					ownedSaham[i] = ownedSaham[i+1]
+					i++
+				}
+				countSaham--
+			}
+			fmt.Println("Saham berhasil dihapus.")
+		case 2:
+			// menu tambah saham
+			if countSaham < nSaham {
+				var kode, nama string
+				var harga, perubahan_persentase float64
+				var volume int
+
+				fmt.Print("Masukkan kode saham > ")
+				fmt.Scan(&kode)
+				fmt.Print("Masukkan nama perusahaan (gunakan underscore untuk spasi) > ")
+				fmt.Scan(&nama)
+				fmt.Print("Masukkan harga saham > ")
+				fmt.Scan(&harga)
+				fmt.Print("Masukkan perubahan % saham (gunakan tanda +/-) > ")
+				fmt.Scan(&perubahan_persentase)
+				fmt.Print("Masukkan volume saham > ")
+				fmt.Scan(&volume)
+
+				// menyimpan data saham baru ke dalam listSaham
+				listSaham[countSaham].kode = kode
+				listSaham[countSaham].nama = nama
+				listSaham[countSaham].harga = harga
+				listSaham[countSaham].perubahan_persentase = perubahan_persentase
+				listSaham[countSaham].volume = volume
+
+				ownedSaham[countSaham] = 0 // jumlah saham yang dimiliki awalnya 0
+				countSaham++               // menambah jumlah saham yang ada
+				fmt.Println("Saham berhasil ditambahkan.")
+			} else {
+				fmt.Println("Market sudah penuh.")
+			}
 		case 3:
 		}
 	}
